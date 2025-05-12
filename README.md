@@ -33,7 +33,7 @@ The stack created a Amazon DynamoDB table named **%L7AMBaselineResources%**. To 
 <img width="488" alt="image" src="https://github.com/user-attachments/assets/04060340-2662-400d-8dba-2fb708014cb3" />
 
 
-## Start a DDoS attack
+## Simulate a DDoS attack
 
 After waiting for 48 hours, simulate an attack using ddosify (https://github.com/ddosify/ddosify). First, Go to AWS CloudShell and install the tool:
 
