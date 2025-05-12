@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Launch Serverless Specification template describing your function.
+Resources:
+  L7AMBaselineLauncherv2:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: ./lambda/
+      Description: 'Launches lambda functions that will baseline resources'
+      Environment:
+        Variables:
+          LAMBDA_FUNCTION: !GetAtt L7AMBaselinerv2.Arn
+          TABLE_NAME: !Ref L7AMBaselineResources
+      MemorySize: 256
+      Timeout: 90
+      Handler: launcher.lambda_handler
+      Runtime: python3.11
+      Architectures:
+        - arm64
+      Events:
+        EveryMinute:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 minute)
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref L7AMBaselineResources
+        - LambdaInvokePolicy:
+            FunctionName: !Ref L7AMBaselinerv2
+      RuntimeManagementConfig:
+        UpdateRuntimeOn: Auto
+      Tags:
+        auto-delete: 'no'
+  L7AMBaselinerv2:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: ./lambda/
+      Description: 'Sends HTTP requests to baseline resources'
+      MemorySize: 256
+      Timeout: 60
+      Handler: baseline.lambda_handler
+      Runtime: python3.11
+      Architectures:
+        - arm64
+      Tags:
+        auto-delete: 'no'
+  L7AMBaselineResources:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: hostname
+        Type: String
+      Tags:
+        auto-delete: no
+

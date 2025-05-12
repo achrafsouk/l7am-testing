@@ -1,0 +1,4 @@
+en-us
+fr
+de
+pt-pt
