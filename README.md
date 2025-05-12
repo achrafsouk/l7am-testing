@@ -17,8 +17,8 @@ aws cloudformation deploy --template-file template-processed.yaml --stack-name "
 
 Create a resource in AWS (e.g. CloudFront distribution), protect it with Shield Advanced, and configure the appropriate health checks. To succeed the test:
 - Configure health checks that fail during your test. Failed health checks, will enable Shield Advanced to detect DDoS attacks with higher sensitivity.
-- Leave the baselining tool running for at least 48 hours.
 - Make sure you configure L7AM with block action.
+- Leave the baselining tool running for at least 48 hours.
 
 <img width="488" alt="image" src="https://github.com/user-attachments/assets/04060340-2662-400d-8dba-2fb708014cb3" />
 
