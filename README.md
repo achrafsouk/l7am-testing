@@ -1,7 +1,5 @@
 # Testing Shield Advanced's Layer 7 Auto mitigation
 
-
-
 ## Create normal baseline
 
 To test the automatic DDoS protection of Shield Advance at layer 7, first create a baseline of normal traffic. Shield Advanced detects DDoS events when there is a significant deviatation from the normal baseline traffic. Run the following command to start baselining, after changeing the S3 bucket name to a bucket you own:
@@ -24,9 +22,8 @@ Create a resource in AWS (e.g. CloudFront distribution), protect it with Shield 
 
 ## Start a DDoS attack
 
-To simulate an attack you can use ddosify (https://github.com/ddosify/ddosify):
+After waiting for 48 hours, simulate an attack using ddosify (https://github.com/ddosify/ddosify). First, Go to AWS CloudShell and install the tool:
 
-Go to AWS CloudShell and install the tool:
 ```
 sudo yum -y install golang
 go install go.ddosify.com/ddosify@latest
