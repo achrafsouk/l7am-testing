@@ -1,8 +1,12 @@
 # Testing Shield Advanced's Layer 7 Auto mitigation
 
-## Create normal baseline
+## Protect a resource using Shield Advanced
 
-To test the automatic DDoS protection of Shield Advance at layer 7, first create a baseline of normal traffic. Shield Advanced detects DDoS events when there is a significant deviatation from the normal baseline traffic. Run the following command to start baselining, after changeing the S3 bucket name to a bucket you own:
+Create a resource in AWS (e.g. CloudFront distribution), protect it with Shield Advanced (L7AM enabled in block), and configure the appropriate health checks that fail during the DDoS attack to make Shield Advanced detection more sensitive. 
+
+## Deploy the baselining tool
+
+To test the automatic DDoS protection of Shield Advance at layer 7, first create a baseline of normal traffic. Shield Advanced detects DDoS events when there is a significant deviatation from the normal baseline traffic. Run the following command to create the baselining tool, after changeing the S3 bucket name to a bucket you own:
 
 ```
 git clone https://github.com/achrafsouk/l7am-testing.git
@@ -11,14 +15,23 @@ aws cloudformation package --template-file template.yaml --s3-bucket "YOUR_BUCKE
 aws cloudformation deploy --template-file template-processed.yaml --stack-name "shield-testing-l7am" --capabilities CAPABILITY_IAM
 ```
 
-## Protect a resource using Shield Advanced
+## Generate normal traffic baseline
 
-Create a resource in AWS (e.g. CloudFront distribution), protect it with Shield Advanced, and configure the appropriate health checks. To succeed the test:
-- Configure health checks that fail during your test. Failed health checks, will enable Shield Advanced to detect DDoS attacks with higher sensitivity.
-- Make sure you configure L7AM with block action.
-- Leave the baselining tool running for at least 48 hours.
+The stack created a Amazon DynamoDB table named **%L7AMBaselineResources%**. To start generating baseline traffic, create an item in the table with the following format, using your created :
+
+{
+ "hostname": "YOUR_PORTECTED_RESOURCE.COM",
+ "max_requests_per_min": 2000,
+ "min_requests_per_min": 5,
+ "parallelism": 10,
+ "protocol": "https"
+}
+
+> [!WARNING]
+> Leave the baselining tool running for at least 48 hours before starting the test.
 
 <img width="488" alt="image" src="https://github.com/user-attachments/assets/04060340-2662-400d-8dba-2fb708014cb3" />
+
 
 ## Start a DDoS attack
 
