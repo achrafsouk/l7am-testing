@@ -49,3 +49,9 @@ Then start an attack (e.g. 1K RPS for 20 mins) using the below command after cha
 
 Verify how the attack is mitigated using WAF metrics, and in the Shield Advance console.
 
+
+<img width="1024" alt="image" src="https://github.com/user-attachments/assets/c7a67882-6f27-44e9-a9a7-facc32882625" />
+<img width="1022" alt="image" src="https://github.com/user-attachments/assets/b1f907ff-4d51-40b9-aa54-15008f570bbe" />
+
+
+
