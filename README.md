@@ -47,5 +47,5 @@ Then start an attack (e.g. 1K RPS for 20 mins) using the below command after cha
 ~/go/bin/ddosify -n 1200000 -d 1200 -h "User-Agent: DemoAttack" -t https://YOUR_PORTECTED_RESOURCE.COM/PATH -l waved
 ```
 
-Verify how the attack is mitigated using WAF metrics.
+Verify how the attack is mitigated using WAF metrics, and in the Shield Advance console.
 
