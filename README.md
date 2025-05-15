@@ -2,11 +2,11 @@
 
 ## Protect a resource using Shield Advanced
 
-Create a resource in AWS (e.g. CloudFront distribution), protect it with Shield Advanced (L7AM enabled in block), and configure the appropriate health checks that fail during the DDoS attack to make Shield Advanced detection more sensitive. 
+Create a resource in AWS (e.g. CloudFront distribution), protect it with Shield Advanced (L7AM enabled in block), and configure the appropriate [health checks](https://docs.aws.amazon.com/waf/latest/developerguide/health-checks-metrics.html#health-checks-metrics-common). Healtch checks influences the detection sensitivity of Shield Advanced. When the health check is unhealthy, Shield Advanced detects attacks with lower thresholds. Make sure that your configured health checks become unhealthy during the attack simulation.
 
 ## Deploy the baselining tool
 
-To test the automatic DDoS protection of Shield Advance at layer 7, first create a baseline of normal traffic. Shield Advanced detects DDoS events when there is a significant deviatation from the normal baseline traffic. Run the following command to create the baselining tool, after changeing the S3 bucket name to a bucket you own:
+To test the automatic DDoS protection of Shield Advance at layer 7, first create a baseline of normal traffic. Shield Advanced detects DDoS events when there is a considerable deviatation from the normal baseline traffic. Run the following command to create the baselining tool, after changeing the S3 bucket name to a bucket you own:
 
 ```
 git clone https://github.com/achrafsouk/l7am-testing.git
@@ -47,7 +47,7 @@ Then start an attack (e.g. 1K RPS for 20 mins) using the below command after cha
 ~/go/bin/ddosify -n 1200000 -d 1200 -h "User-Agent: DemoAttack" -t https://YOUR_PORTECTED_RESOURCE.COM/PATH -l waved
 ```
 
-Verify how the attack is mitigated using WAF metrics, and in the Shield Advance console.
+Verify how the attack is mitigated using WAF metrics, and in the Shield Advance console. Note that Shield Advanced, keep the mitigation rule for some time after they are added to the Shield Advanced rule group in AWS WAF. If you start another attack with the same paramters, it will immediately be blocked by WAF.
 
 
 <img width="1024" alt="image" src="https://github.com/user-attachments/assets/c7a67882-6f27-44e9-a9a7-facc32882625" />
